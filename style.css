@@ -1498,10 +1498,6 @@ footer {
         font-size: 2.5rem;
     }
     
-    /* .hero span {
-        font-size: 3.5rem;
-    } */
-    
     .hero h2 {
         font-size: 1.6rem;
     }
@@ -1615,6 +1611,14 @@ footer {
 
 /* Small devices (landscape phones, less than 576px) */
 @media (max-width: 575.98px) {
+    .logo-text{
+        font-size: 1.1rem;
+    }
+    #logo{
+        height: 50px;
+        border: white solid;
+        border-radius: 50%;
+}
     h1 {
         font-size: 2rem;
     }
@@ -1686,6 +1690,9 @@ footer {
     
     .member-role {
         font-size: 0.9rem;
+    }
+    .member-info p{
+        font-size: 13px;
     }
     
     .member-social a {
@@ -1850,6 +1857,7 @@ footer {
         right: 20px;
     }
 }
+
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
