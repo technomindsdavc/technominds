@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechFest 2026 · SYSTEM ONLINE</title>
+  <!-- Tailwind + Lucide + Inter font (from EventCards) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ========== GLOBAL RESET ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #050b14;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* ========== NAVBAR STYLES (from Navbar.html) ========== */
+    :root {
+      --bg-dark: #050b14;
+      --violet-500: #8b5cf6;
+      --violet-600: #7c3aed;
+      --violet-700: #6d28d9;
+      --violet-300: #c4b5fd;
+      --blue-200: #bfdbfe;
+      --blue-300: #93c5fd;
+    }
+
+    .navbar {
+      position: fixed;
+      width: 100%;
+      z-index: 50;
+      background-color: rgba(5, 11, 20, 0.7);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .navbar-container {
+      max-width: 80rem;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .navbar-container {
+        padding: 0 1.5rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .navbar-container {
+        padding: 0 2rem;
+      }
+    }
+
+    .navbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 5rem;
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-container {
+      flex-shrink: 0;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 0.375rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      overflow: hidden;
+    }
+
+    .logo-img {
+      height: 2.8rem;
+      width: 2.8rem;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.8));
+      border-radius: 9999px;
+    }
+
+    .nav-links-desktop {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .nav-links-desktop {
+        display: block;
+        margin-left: 2.5rem;
+      }
+    }
+
+    .nav-links-list {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      color: white;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      transition: color 0.2s, background-color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--violet-300);
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-link.secondary {
+      color: var(--blue-200);
+    }
+
+    .register-btn-container {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .register-btn-container {
+        display: block;
+      }
+    }
+
+    .register-btn {
+      position: relative;
+      background-color: var(--violet-600);
+      color: white;
+      font-weight: 700;
+      padding: 0.625rem 1.5rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      transform-origin: center;
+      box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+      overflow: hidden;
+    }
+
+    .register-btn:hover {
+      background-color: var(--violet-700);
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(124, 58, 237, 0.6);
+    }
+
+    .register-btn-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .register-btn-shimmer {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: translateX(-100%);
+    }
+
+    .register-btn:hover .register-btn-shimmer {
+      animation: shimmer 1s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .mobile-menu-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      border-radius: 0.375rem;
+      color: var(--blue-300);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s, background-color 0.2s;
+    }
+
+    .mobile-menu-btn:hover {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-menu-btn:focus {
+      outline: none;
+    }
+
+    @media (min-width: 768px) {
+      .mobile-menu-btn {
+        display: none;
+      }
+    }
+
+    .menu-icon,
+    .close-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .mobile-menu {
+      display: none;
+      background-color: rgba(5, 11, 20, 0.95);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    @media (min-width: 768px) {
+      .mobile-menu {
+        display: none !important;
+      }
+    }
+
+    .mobile-menu-content {
+      padding: 0.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .mobile-menu-content {
+        padding: 0.5rem 0.75rem;
+      }
+    }
+
+    .mobile-nav-link {
+      display: block;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.375rem;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: white;
+      transition: background-color 0.2s;
+    }
+
+    .mobile-nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .mobile-nav-link.secondary {
+      color: var(--blue-200);
+    }
+
+    .mobile-register-btn {
+      width: 100%;
+      text-align: left;
+      background-color: var(--violet-600);
+      color: white;
+      font-weight: 700;
+      padding: 0.5rem 0.75rem;
+      margin-top: 1rem;
+      border-radius: 0.375rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+    }
+
+    .sparkle-icon {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    /* ========== HERO STYLES (from Hero.html) ========== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #050b14;
+    }
+
+    .robot-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-size: cover;
+      background-position: center;
+      background-image: url('https://images.unsplash.com/photo-1759885697855-52d11c41b19b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZW9uJTIwcm9ib3QlMjBmdXR1cmlzdGljJTIwY3liZXJuZXRpYyUyMGJhY2tncm91bmR8ZW58MXx8fHwxNzY5NTA4MTk4fDA&ixlib=rb-4.1.0&q=80&w=1080');
+    }
+
+    .dark-overlay-top {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(to top, #050b14, rgba(5, 11, 20, 0.8), transparent);
+      opacity: 0.9;
+    }
+
+    .dark-overlay-right {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(to right, rgba(5, 11, 20, 0.9), transparent, rgba(5, 11, 20, 0.9));
+    }
+
+    .particles-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image: linear-gradient(rgba(124, 58, 237, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124, 58, 237, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+      -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 70%, transparent 100%);
+      mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 70%, transparent 100%);
+    }
+
+    .neon-glow-blue {
+      position: absolute;
+      top: 20%;
+      left: 20%;
+      width: 300px;
+      height: 300px;
+      background-color: rgba(37, 99, 235, 0.3);
+      border-radius: 50%;
+      filter: blur(100px);
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .neon-glow-violet {
+      position: absolute;
+      bottom: 20%;
+      right: 20%;
+      width: 400px;
+      height: 400px;
+      background-color: rgba(124, 58, 237, 0.3);
+      border-radius: 50%;
+      filter: blur(100px);
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      animation-delay: 700ms;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.5
+      }
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      max-width: 64rem;
+      margin: 0 auto;
+    }
+
+    @media (min-width:640px) {
+      .content {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (min-width:1024px) {
+      .content {
+        padding: 1.5rem 2rem;
+      }
+    }
+
+    .content-inner {
+      position: relative;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .decorative-line {
+      position: absolute;
+      top: -3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 6rem;
+      background: linear-gradient(to bottom, transparent, #8b5cf6, transparent);
+      opacity: 0.5;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 1rem;
+      border-radius: 9999px;
+      background-color: rgba(30, 58, 138, 0.5);
+      color: #93c5fd;
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(59, 130, 246, 0.5);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+      letter-spacing: 0.1em;
+    }
+
+    .heading-wrapper {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .heading-blur {
+      position: absolute;
+      inset: -4px;
+      filter: blur(24px);
+      background: linear-gradient(to right, #2563eb, #7c3aed);
+      opacity: 0.3;
+    }
+
+    .heading {
+      font-size: 3.75rem;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      color: white;
+      position: relative;
+      filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.25));
+    }
+
+    @media (min-width:768px) {
+      .heading {
+        font-size: 6rem;
+      }
+    }
+
+    .heading-gradient {
+      background: linear-gradient(to right, #67e8f9, #60a5fa, #8b5cf6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
+    }
+
+    .description {
+      margin-top: 1.5rem;
+      font-size: 1.25rem;
+      color: #dbeafe;
+      max-width: 48rem;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+      font-weight: 300;
+      filter: drop-shadow(0 4px 6px rgb(0 0 0 / 0.1));
+    }
+
+    @media (min-width:768px) {
+      .description {
+        font-size: 1.5rem;
+      }
+    }
+
+    .highlight-text {
+      color: #c4b5fd;
+      font-weight: 600;
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+    }
+
+    .buttons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media (min-width:640px) {
+      .buttons-container {
+        flex-direction: row;
+      }
+    }
+
+    .btn-primary {
+      position: relative;
+      background-color: #7c3aed;
+      color: white;
+      font-weight: 700;
+      padding: 1rem 2.5rem;
+      border-radius: 9999px;
+      border: none;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(124, 58, 237, 0.7);
+    }
+
+    .btn-primary .shimmer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: translateX(-100%);
+    }
+
+    .btn-primary:hover .shimmer {
+      animation: shimmer 1.5s infinite;
+    }
+
+    .btn-secondary {
+      padding: 1rem 2.5rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(59, 130, 246, 0.5);
+      background: transparent;
+      color: #bfdbfe;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(30, 58, 138, 0.3);
+      box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .arrow-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .bottom-fade {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 8rem;
+      background: linear-gradient(to top, #050b14, transparent);
+      z-index: 20;
+    }
+
+    /* ========== EVENT CARDS CUSTOM STYLES (from EventCards.html) ========== */
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-cyan .category-badge {
+      background-color: rgba(8, 145, 178, 0.7);
+      border-color: rgba(34, 211, 238, 0.5);
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
+    }
+
+    .card-cyan .category-text {
+      color: rgb(165, 243, 252);
+    }
+
+    .card-cyan .card-title:hover {
+      color: rgb(34, 211, 238);
+    }
+
+    .card-cyan .register-btn {
+      background: linear-gradient(to right, rgb(8, 145, 178), rgb(37, 99, 235));
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+    }
+
+    .card-cyan .register-btn:hover {
+      background: linear-gradient(to right, rgb(6, 182, 212), rgb(59, 130, 246));
+    }
+
+    .card-pink .category-badge {
+      background-color: rgba(131, 24, 67, 0.7);
+      border-color: rgba(244, 114, 182, 0.5);
+      box-shadow: 0 4px 15px rgba(190, 24, 93, 0.2);
+    }
+
+    .card-pink .category-text {
+      color: rgb(251, 207, 232);
+    }
+
+    .card-pink .card-title:hover {
+      color: rgb(244, 114, 182);
+    }
+
+    .card-pink .register-btn {
+      background: linear-gradient(to right, rgb(219, 39, 119), rgb(225, 29, 72));
+      box-shadow: 0 0 20px rgba(244, 114, 182, 0.4);
+    }
+
+    .card-pink .register-btn:hover {
+      background: linear-gradient(to right, rgb(236, 72, 153), rgb(244, 63, 94));
+    }
+
+    .card-emerald .category-badge {
+      background-color: rgba(6, 78, 59, 0.7);
+      border-color: rgba(52, 211, 153, 0.5);
+      box-shadow: 0 4px 15px rgba(6, 95, 70, 0.2);
+    }
+
+    .card-emerald .category-text {
+      color: rgb(187, 247, 208);
+    }
+
+    .card-emerald .card-title:hover {
+      color: rgb(52, 211, 153);
+    }
+
+    .card-emerald .register-btn {
+      background: linear-gradient(to right, rgb(5, 150, 105), rgb(22, 163, 74));
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .card-emerald .register-btn:hover {
+      background: linear-gradient(to right, rgb(16, 185, 129), rgb(34, 197, 94));
+    }
+
+    .event-card {
+      transition: all 0.5s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 50px rgba(124, 58, 237, 0.2);
+    }
+
+    .event-card:hover .card-image {
+      transform: scale(1.1) rotate(1deg);
+    }
+
+    .event-card:hover .neon-border {
+      opacity: 1;
+    }
+
+    .card-image {
+      transition: all 0.7s ease;
+    }
+
+    .register-btn {
+      transition: all 0.3s ease;
+    }
+
+    .register-btn:hover {
+      transform: translateY(-4px);
+    }
+
+    .neon-border {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    /* ========== FOOTER STYLES (from Footer.html) ========== */
+    .footer {
+      background-color: #02040a;
+      border-top: 1px solid rgba(139, 92, 246, 0.2);
+      padding-top: 4rem;
+      padding-bottom: 2rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glow-effect {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 48rem;
+      height: 4px;
+      background: linear-gradient(to right, transparent, #8b5cf6, transparent);
+      opacity: 0.5;
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+    }
+
+    .footer-container {
+      max-width: 80rem;
+      margin: 0 auto;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    @media (min-width:640px) {
+      .footer-container {
+        padding: 0 1.5rem;
+      }
+    }
+
+    @media (min-width:1024px) {
+      .footer-container {
+        padding: 0 2rem;
+      }
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (min-width:768px) {
+      .footer-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3rem;
+      }
+    }
+
+    .brand-section {
+      grid-column: span 1;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .logo {
+      height: 2rem;
+      width: 2rem;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .brand-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #60a5fa, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 5px rgba(139, 92, 246, 0.3));
+    }
+
+    .brand-description {
+      color: rgba(191, 219, 254, 0.6);
+      font-size: 0.875rem;
+      line-height: 1.625;
+    }
+
+    .section-title {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.875rem;
+      border-left: 2px solid;
+      padding-left: 0.75rem;
+    }
+
+    .section-title.violet {
+      border-color: #8b5cf6;
+    }
+
+    .section-title.blue {
+      border-color: #3b82f6;
+    }
+
+    .section-title.purple {
+      border-color: #a855f7;
+    }
+
+    .links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .links-list a {
+      color: rgba(191, 219, 254, 0.6);
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .links-list a:hover {
+      color: #8b5cf6;
+      padding-left: 0.5rem;
+    }
+
+    .links-list.blue-links a:hover {
+      color: #3b82f6;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-icon {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 0.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    /* .social-icon:hover {
+      background-color: #7c3aed; 
+      transform: scale(1.1);
+    } */
+
+    .social-icon svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    #twitter:hover {
+      background-color: #45adee;
+      /* color: #1da1f2; */
+      transform: scale(1.1);
+    }
+
+    #github:hover {
+      background-color: #d0dce3;
+      color: black;
+      transform: scale(1.1);
+    }
+
+    #linkedin:hover {
+      background-color: #3279a4;
+      /* color: #1da1f2; */
+      transform: scale(1.1);
+    }
+
+    #insta:hover {
+      background-color: #e434db;
+      /* color: #1da1f2; */
+      transform: scale(1.1);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    @media (min-width:768px) {
+      .footer-bottom {
+        flex-direction: row;
+      }
+    }
+
+    .footer-text {
+      color: rgba(191, 219, 254, 0.4);
+      font-size: 0.875rem;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .icon {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+</head>
+
+<body class="bg-[#050b14]">
+
+  <!-- ========== FIXED NAVBAR ========== -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-inner">
+        <div class="navbar-left">
+          <div class="logo-container">
+            <img src="./Img/TM_Logo.jpeg" alt="TechFest Logo" class="logo-img">
+          </div>
+          <div class="nav-links-desktop">
+            <div class="nav-links-list">
+              <a href="#" class="nav-link">Home</a>
+              <a href="#events" class="nav-link secondary">Events</a>
+              <a href="#" class="nav-link secondary">Schedule</a>
+              <a href="#" class="nav-link secondary">Sponsors</a>
+            </div>
+          </div>
+        </div>
+        <div class="register-btn-container">
+          <button class="register-btn">
+            <span class="register-btn-content">
+              Register
+              <svg class="sparkle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                <path d="M5 3v4" />
+                <path d="M19 17v4" />
+                <path d="M3 5h4" />
+                <path d="M17 19h4" />
+              </svg>
+            </span>
+            <div class="register-btn-shimmer"></div>
+          </button>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+          <svg class="menu-icon" id="menuIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
+          <svg class="close-icon" id="closeIcon" style="display:none;" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-content">
+        <a href="#" class="mobile-nav-link">Home</a>
+        <a href="#events" class="mobile-nav-link secondary">Events</a>
+        <a href="#" class="mobile-nav-link secondary">Schedule</a>
+        <a href="#" class="mobile-nav-link secondary">Sponsors</a>
+        <button class="mobile-register-btn">Register Now</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO SECTION with particles background ========== -->
+  <div class="hero">
+    <div class="robot-bg"></div>
+    <div class="dark-overlay-top"></div>
+    <div class="dark-overlay-right"></div>
+    <canvas class="particles-canvas" id="particlesCanvas"></canvas>
+    <div class="grid-bg"></div>
+    <div class="neon-glow-blue"></div>
+    <div class="neon-glow-violet"></div>
+
+    <div class="content">
+      <div class="content-inner">
+        <div class="decorative-line"></div>
+        <span class="badge">SYSTEM ONLINE // MARCH 2026</span>
+        <h1 class="heading-wrapper">
+          <span class="heading-blur"></span>
+          <span class="heading heading-gradient">TechFest</span>
+        </h1>
+        <p class="description">
+          Enter the <span class="highlight-text">IT Era</span>. Experience the fusion of neon dreams and cybernetic
+          reality.
+        </p>
+        <div class="buttons-container">
+          <button class="btn-primary">
+            <div class="shimmer"></div>
+            <span style="display:flex; align-items:center; gap:0.5rem;">
+              EVENT HEADS
+              <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </span>
+          </button>
+          <button class="btn-secondary">VIEW PROTOCOLS</button>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-fade"></div>
+  </div>
+
+  <!-- ========== EVENTS CARDS SECTION ========== -->
+  <section id="events" class="py-24 bg-[#050b14] text-white relative overflow-hidden">
+    <!-- Background Circuit (same as EventCards) -->
+    <div class="absolute inset-0 z-0 opacity-10 mix-blend-screen pointer-events-none"
+      style="background-image: url('https://images.unsplash.com/photo-1735713212083-82eafc42bf64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmdXR1cmlzdGljJTIwY2lyY3VpdCUyMGJvYXJkJTIwbmVvbiUyMGdsb3d8ZW58MXx8fHwxNzY5NTA4MTk4fDA&ixlib=rb-4.1.0&q=80&w=1080'); background-size: cover; background-position: center;">
+    </div>
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+      <div class="absolute top-[20%] right-[0] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]"></div>
+      <div class="absolute bottom-[10%] left-[0] w-[400px] h-[400px] bg-violet-600/10 rounded-full blur-[120px]"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center mb-16">
+        <div
+          class="inline-flex items-center justify-center p-2 mb-4 bg-violet-900/20 rounded-full border border-violet-500/30">
+          <i data-lucide="cpu" class="w-5 h-5 text-violet-400 mr-2"></i>
+          <span class="text-violet-300 font-mono text-sm">EVENTS_MODULE_V2.0</span>
+        </div>
+        <h2 class="text-4xl md:text-6xl font-black mb-4 tracking-tight">
+          <span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-white drop-shadow-lg">FEATURED</span>
+          <span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]">EVENTS</span>
+        </h2>
+        <p class="text-blue-200/70 text-lg max-w-2xl mx-auto font-light">Engage in high-performance competitions and
+          knowledge transfer protocols.</p>
+      </div>
+
+      <div id="cards-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="glow-effect"></div>
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="brand-section">
+          <div class="brand-header">
+            <img src="./Img/TM_Logo.jpeg" alt="" class="logo">
+            <h3 class="brand-name">TechFest</h3>
+          </div>
+          <p class="brand-description">Empowering the next generation of innovators through technology, creativity, and
+            collaboration. Join the revolution.</p>
+        </div>
+        <div>
+          <h4 class="section-title violet">Quick Links</h4>
+          <ul class="links-list">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#">Schedule</a></li>
+            <li><a href="#">Sponsors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="section-title blue">Legal</h4>
+          <ul class="links-list blue-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Code of Conduct</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="section-title purple">Connect</h4>
+          <div class="social-icons">
+            <a href="#" id="twitter" class="social-icon" aria-label="Twitter"><svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+              </svg></a>
+            <a href="#" id="github" class="social-icon" aria-label="GitHub"><svg class="icon" viewBox="0 0 24 24">
+                <path
+                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+              </svg></a>
+            <a href="#" id="linkedin" class="social-icon" aria-label="LinkedIn"><svg class="icon" viewBox="0 0 24 24">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+              </svg></a>
+            <a href="#" id="insta" class="social-icon" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-text">© 2026 TechFest. SYSTEM_STATUS: ONLINE</p>
+        <p class="footer-text">Designed for the Future</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== COMBINED SCRIPTS ========== -->
+  <script>
+    (function () {
+      // ----- Navbar logic -----
+      let isOpen = false;
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const menuIcon = document.getElementById('menuIcon');
+      const closeIcon = document.getElementById('closeIcon');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      if (mobileMenuBtn) {
+        function toggleMenu() { isOpen = !isOpen; updateMenuState(); }
+        function updateMenuState() {
+          if (isOpen) {
+            mobileMenu.classList.add('open');
+            menuIcon.style.display = 'none';
+            closeIcon.style.display = 'block';
+          } else {
+            mobileMenu.classList.remove('open');
+            menuIcon.style.display = 'block';
+            closeIcon.style.display = 'none';
+          }
+        }
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+          link.addEventListener('click', () => { isOpen = false; updateMenuState(); });
+        });
+        window.addEventListener('resize', () => {
+          if (window.innerWidth >= 768) { isOpen = false; updateMenuState(); }
+        });
+      }
+
+      // ----- Hero Particles (from Hero.html) -----
+      class ParticlesBackground {
+        constructor(canvasId) {
+          this.canvas = document.getElementById(canvasId);
+          if (!this.canvas) return;
+          this.ctx = this.canvas.getContext('2d');
+          this.particles = [];
+          this.particleCount = 80;
+          this.mouse = { x: null, y: null, radius: 150 };
+          this.init();
+          this.animate();
+          this.setupEventListeners();
+        }
+        init() { this.resize(); this.createParticles(); }
+        resize() { this.canvas.width = window.innerWidth; this.canvas.height = window.innerHeight; }
+        createParticles() {
+          this.particles = [];
+          for (let i = 0; i < this.particleCount; i++) {
+            const size = Math.random() * 2 + 1;
+            const x = Math.random() * this.canvas.width;
+            const y = Math.random() * this.canvas.height;
+            const speedX = Math.random() * 0.5 - 0.25;
+            const speedY = Math.random() * 0.5 - 0.25;
+            const opacity = Math.random() * 0.5 + 0.2;
+            const colors = [
+              `rgba(124, 58, 237, ${opacity})`, `rgba(59, 130, 246, ${opacity})`,
+              `rgba(139, 92, 246, ${opacity})`, `rgba(96, 165, 250, ${opacity})`,
+              `rgba(167, 139, 250, ${opacity})`
+            ];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            this.particles.push({ x, y, size, speedX, speedY, color, originalX: x, originalY: y });
+          }
+        }
+        drawParticle(p) {
+          this.ctx.beginPath(); this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          this.ctx.fillStyle = p.color; this.ctx.fill();
+        }
+        connectParticles() {
+          const maxDistance = 105;
+          for (let i = 0; i < this.particles.length; i++) {
+            for (let j = i + 1; j < this.particles.length; j++) {
+              const dx = this.particles[i].x - this.particles[j].x;
+              const dy = this.particles[i].y - this.particles[j].y;
+              const distance = Math.sqrt(dx * dx + dy * dy);
+              if (distance < maxDistance) {
+                const opacity = (1 - distance / maxDistance) * 0.2;
+                this.ctx.beginPath();
+                this.ctx.strokeStyle = `rgba(124, 58, 237, ${opacity})`;
+                this.ctx.lineWidth = 0.8;
+                this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
+                this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
+                this.ctx.stroke();
+              }
+            }
+          }
+        }
+        updateParticle(p) {
+          if (this.mouse.x !== null && this.mouse.y !== null) {
+            const dx = this.mouse.x - p.x, dy = this.mouse.y - p.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < this.mouse.radius) {
+              const force = (this.mouse.radius - dist) / this.mouse.radius;
+              const angle = Math.atan2(dy, dx);
+              p.x -= Math.cos(angle) * force * 2;
+              p.y -= Math.sin(angle) * force * 2;
+            }
+          }
+          p.x += p.speedX; p.y += p.speedY;
+          if (p.x < 0 || p.x > this.canvas.width) p.speedX = -p.speedX;
+          if (p.y < 0 || p.y > this.canvas.height) p.speedY = -p.speedY;
+          if (p.x < 0) p.x = 0; if (p.x > this.canvas.width) p.x = this.canvas.width;
+          if (p.y < 0) p.y = 0; if (p.y > this.canvas.height) p.y = this.canvas.height;
+        }
+        animate() {
+          if (!this.ctx) return;
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          this.particles.forEach(p => { this.updateParticle(p); this.drawParticle(p); });
+          this.connectParticles();
+          requestAnimationFrame(() => this.animate());
+        }
+        setupEventListeners() {
+          window.addEventListener('resize', () => { this.resize(); this.createParticles(); });
+          window.addEventListener('mousemove', (e) => { this.mouse.x = e.clientX; this.mouse.y = e.clientY; });
+          window.addEventListener('mouseout', () => { this.mouse.x = null; this.mouse.y = null; });
+        }
+      }
+
+      // ----- Event Cards data & render (from EventCards.html) -----
+      const cards = [
+        {
+          title: "24H Hackathon",
+          category: "Competition",
+          image: "https://images.unsplash.com/photo-1638029202288-451a89e0d55f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYWNrYXRob24lMjBjb2RpbmclMjBldmVudHxlbnwxfHx8fDE3Njk1MDc5MzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+          description: "Push your limits in our flagship 24-hour coding marathon. Build solutions for real-world problems and win massive prizes.",
+          date: "Mid February 2026",
+          location: "Main Auditorium",
+          icon: "code",
+          color: "cyan"
+        },
+        {
+          title: "Reel and Meme Competition",
+          category: "Creative",
+          image: "https://images.unsplash.com/photo-1639323252613-00dd92e6c7d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzbWFydHBob25lJTIwcmVjb3JkaW5nJTIwdmlkZW8lMjBzb2NpYWwlMjBtZWRpYSUyMG5lb24lMjBjb250ZW50JTIwY3JlYXRpb258ZW58MXx8fHwxNzY5NTg3NTMzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+          description: "Showcase your creativity and humor. Create the most viral reels and memes to win exciting rewards and fame.",
+          date: "Mid February 2026",
+          location: "Lab-5/ MBA Lab",
+          icon: "smartphone",
+          color: "pink"
+        },
+        {
+          title: "Gaming Competition",
+          category: "Esports",
+          image: "https://images.unsplash.com/photo-1758179762049-615d9aac58ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlc3BvcnRzJTIwZ2FtaW5nJTIwdG91cm5hbWVudCUyMG5lb24lMjBzZXR1cHxlbnwxfHx8fDE3Njk1ODc1Mjh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+          description: "Battle it out in the ultimate esports tournament. Compete in top-tier titles and claim the championship trophy.",
+          date: "Mid February 2026",
+          location: "Mini Auditorium",
+          icon: "gamepad-2",
+          color: "emerald"
+        }
+        // {
+        //   title: "Gaming Competition",
+        //   category: "Esports",
+        //   image: "https://images.unsplash.com/photo-1758179762049-615d9aac58ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlc3BvcnRzJTIwZ2FtaW5nJTIwdG91cm5hbWVudCUyMG5lb24lMjBzZXR1cHxlbnwxfHx8fDE3Njk1ODc1Mjh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+        //   description: "Battle it out in the ultimate esports tournament. Compete in top-tier titles and claim the championship trophy.",
+        //   date: "Mid February 2026",
+        //   location: "Mini Auditorium",
+        //   icon: "gamepad-2",
+        //   color: "emerald"
+        // }
+      ];
+      const iconColors = { cyan: 'text-cyan-300', pink: 'text-pink-300', emerald: 'text-emerald-300' };
+
+      // Generate card HTML
+      function createCardHTML(card, index) {
+        return `
+        <div class="event-card group relative rounded-3xl overflow-hidden bg-[#0a1120]/80 backdrop-blur-xl border border-white/10 hover:border-violet-500/50 flex flex-col card-${card.color}">
+          <!-- Neon Border Effect -->
+          <div class="neon-border absolute inset-0 rounded-3xl bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+
+          <!-- Image Section -->
+          <div class="h-64 overflow-hidden relative shrink-0">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0a1120] to-transparent z-10 opacity-90"></div>
+            
+            <!-- Tech Grid Overlay on Image -->
+            <div class="absolute inset-0 z-10 mix-blend-overlay" style="background-image: linear-gradient(rgba(0,0,0,0.2) 2px, transparent 2px), linear-gradient(90deg, rgba(0,0,0,0.2) 2px, transparent 2px); background-size: 20px 20px;"></div>
+            
+            <img 
+              src="${card.image}" 
+              alt="${card.title}"
+              class="card-image w-full h-full object-cover filter saturate-150"
+            />
+            
+            <!-- Category Badge -->
+            <div class="category-badge absolute top-4 left-4 z-20 backdrop-blur-xl px-4 py-2 rounded-lg border shadow-lg flex items-center gap-2">
+              <i data-lucide="${card.icon}" class="h-6 w-6 ${iconColors[card.color]}"></i>
+              <span class="category-text text-sm font-bold tracking-wider">
+                ${card.category.toUpperCase()}
+              </span>
+            </div>
+          </div>
+
+          <!-- Content Section -->
+          <div class="p-8 relative z-20 -mt-6 flex flex-col flex-grow">
+            <h3 class="card-title text-2xl font-black mb-4 text-white transition-colors drop-shadow-md">
+              ${card.title}
+            </h3>
+            <p class="text-blue-100/60 mb-6 line-clamp-3 leading-relaxed flex-grow">
+              ${card.description}
+            </p>
+            
+            <!-- Event Details -->
+            <div class="flex flex-col space-y-3 mb-6 bg-black/20 p-4 rounded-xl border border-white/5">
+              <div class="flex items-center text-sm text-blue-200/80 font-mono">
+                <i data-lucide="calendar" class="h-4 w-4 mr-3 text-violet-400"></i>
+                ${card.date}
+              </div>
+              <div class="flex items-center text-sm text-blue-200/80 font-mono">
+                <i data-lucide="map-pin" class="h-4 w-4 mr-3 text-violet-400"></i>
+                ${card.location}
+              </div>
+            </div>
+
+            <!-- Register Button -->
+            <button class="register-btn w-full py-4 rounded-xl font-bold text-white flex items-center justify-center gap-2 overflow-hidden relative">
+              <span class="relative z-10 flex items-center gap-2">
+                REGISTER NOW 
+                <i data-lucide="zap" class="h-4 w-4 fill-white"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      `;
+      }
+
+      function renderCards() {
+        const container = document.getElementById('cards-container');
+        if (container) {
+          container.innerHTML = cards.map(c => createCardHTML(c)).join('');
+          if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+      }
+
+      // ----- Footer hover extras (optional) -----
+      function initFooterHovers() {
+        document.querySelectorAll('.social-icon').forEach(icon => {
+          icon.addEventListener('mouseenter', function () { this.style.transform = 'scale(1.1)'; });
+          icon.addEventListener('mouseleave', function () { this.style.transform = 'scale(1)'; });
+        });
+        document.querySelectorAll('.links-list a').forEach(link => {
+          link.addEventListener('mouseenter', function () { this.style.paddingLeft = '0.5rem'; });
+          link.addEventListener('mouseleave', function () { this.style.paddingLeft = '0'; });
+        });
+      }
+
+      // ----- Start everything on DOM ready -----
+      document.addEventListener('DOMContentLoaded', () => {
+        // Hero particles
+        new ParticlesBackground('particlesCanvas');
+        // Event cards
+        renderCards();
+        // Footer interactions
+        initFooterHovers();
+      });
+    })();
+  </script>
+</body>
+
+</html>
